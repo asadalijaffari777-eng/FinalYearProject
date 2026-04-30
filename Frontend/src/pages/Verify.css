@@ -1,0 +1,92 @@
+/* Full page background */
+.verify-page {
+    height: 100vh;
+    background:
+    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+    url('/images/login-bg.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Dark overlay for luxury feel */
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Center container */
+  .verify-container {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Card */
+  .verify-box {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 12px;
+    width: 350px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Heading */
+  .verify-box h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    letter-spacing: 1px;
+  }
+  
+  /* Subtitle */
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #ccc;
+  }
+  
+  /* Input */
+  .verify-box input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 6px;
+    border: none;
+    margin-bottom: 15px;
+    font-size: 16px;
+    outline: none;
+    text-align: center;
+    letter-spacing: 3px;
+  }
+  
+  /* Button */
+  .verify-box button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: #111;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s;
+  }
+  
+  .verify-box button:hover {
+    background: #333;
+  }
+  
+  /* Message */
+  .message {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #f1c40f;
+  }

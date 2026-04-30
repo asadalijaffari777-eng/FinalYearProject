@@ -1,0 +1,178 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== PAGE ===== */
+.register-page {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ===== LEFT SIDE ===== */
+.register-left {
+  width: 50%;
+  height: 100%;
+  position: relative;
+
+  background: url("/images/Gemini_Generated_Image_fby9t2fby9t2fby9.png") no-repeat center center;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Overlay */
+.register-left .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+/* CENTERED CONTENT */
+.register-left .left-content {
+  position: relative;
+  text-align: center;
+  color: white;
+  max-width: 500px;
+  padding: 20px;
+}
+
+.register-left .left-content h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.register-left .left-content p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* ===== RIGHT SIDE ===== */
+.register-right {
+  width: 50%;
+  height: 100%;
+
+  background: #f4f6f8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== FORM CONTAINER ===== */
+.register-box {
+  width: 100%;
+  max-width: 380px;
+}
+
+/* ===== HEADINGS ===== */
+.register-box h2 {
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+/* ===== FORM ===== */
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #444;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52,152,219,0.15);
+}
+
+/* ===== BUTTON ===== */
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.register-btn:hover {
+  background: #2980b9;
+}
+
+/* ===== TEXT ===== */
+.error {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.switch {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 14px;
+}
+
+.switch span {
+  color: #3498db;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.switch span:hover {
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .register-page {
+    flex-direction: column;
+  }
+
+  .register-left {
+    width: 100%;
+    height: 40%;
+  }
+
+  .register-right {
+    width: 100%;
+    height: 60%;
+  }
+
+  .register-left .left-content h1 {
+    font-size: 26px;
+  }
+}
