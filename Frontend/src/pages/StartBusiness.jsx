@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import "./StartBusiness.css";
 
 const STORAGE_KEY = "businessSelections";
@@ -19,164 +20,212 @@ const ITEMS = {
   ],
   "upper-winter": [
     { id: "jackets", name: "Jackets", img: "/images/jacket.png" },
-    { id: "winter-upper", name: "Winter Upper", img: "/images/winter-upper.png" },
-    { id: "sweat-shirt", name: "Sweat Shirt", img: "/images/sweat-shirt.png" },
     { id: "hoodies", name: "Hoodies", img: "/images/hoodies.png" }
   ],
   lower: [
     { id: "trousers", name: "Trousers", img: "/images/trousers.png" },
-    { id: "nicker", name: "Nicker", img: "/images/nicker.png" },
-    { id: "warm-pants", name: "Warm Pants", img: "/images/warm-pants.png" },
-    { id: "jeans-pants", name: "Jeans Pants", img: "/images/jeans-pants.png" },
-    { id: "leggings", name: "Leggings", img: "/images/leggings.png" }
-  ],
-  inner: [
-    { id: "cotton-vest", name: "Cotton Vest", img: "/images/cotton-vest.png" },
-    { id: "underwear", name: "Underwear", img: "/images/underwear.png" }
-  ],
-  socks: [
-    { id: "long-socks", name: "Long Socks", img: "/images/long-socks.png" },
-    { id: "short-socks", name: "Short Socks", img: "/images/short-socks.png" }
+    { id: "jeans-pants", name: "Jeans Pants", img: "/images/jeans-pants.png" }
   ]
 };
 
 export default function StartBusiness() {
   const navigate = useNavigate();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedItems, setSelectedItems] = useState([]);
 
-  // ✅ LOAD FROM LOCAL STORAGE
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        setSelectedItems(JSON.parse(saved));
-      } catch {
-        localStorage.removeItem(STORAGE_KEY);
-      }
-    }
+    if (saved) setSelectedItems(JSON.parse(saved));
   }, []);
 
-  // ✅ SAVE TO LOCAL STORAGE
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(selectedItems));
   }, [selectedItems]);
 
-  // ✅ TOGGLE SELECTION
-  const toggleItem = (category, id, name, img) => {
+  const toggleItem = (category, item) => {
     setSelectedItems(prev => {
-      const exists = prev.some(
-        i => i.category === category && i.id === id
+      const exists = prev.find(
+        i => i.id === item.id && i.category === category
       );
 
       if (exists) {
         return prev.filter(
-          i => !(i.category === category && i.id === id)
+          i => !(i.id === item.id && i.category === category)
         );
       }
 
-      return [...prev, { category, id, name, img }];
+      return [...prev, { ...item, category }];
     });
   };
 
-  // ✅ CHECK SELECTED
   const isSelected = (category, id) =>
-    selectedItems.some(i => i.category === category && i.id === id);
+    selectedItems.some(i => i.id === id && i.category === category);
 
-  // ✅ APPLY → SEND ITEM IDS (CLEAN)
+  const removeItem = (category, id) =>
+    setSelectedItems(prev =>
+      prev.filter(i => !(i.id === id && i.category === category))
+    );
+
   const handleApply = () => {
-    if (!selectedItems.length) {
-      alert("Select at least one item.");
-      return;
-    }
-
-    const items = selectedItems.map(i => i.id).join(",");
-
-    console.log("Sending items:", items);
-
-    // navigate(`/manufacturers?items=${items}`);
-    navigate('/aichat')
+    if (!selectedItems.length) return alert("Select at least one item");
+    navigate("/aichat");
   };
 
   return (
-    <div className="business-page">
+    <div className="sb-page">
 
-      {/* HEADER */}
-      <header>
-        <div className="container header-container">
-          <div className="logo">
-            <Link to="/dashboard">Startup Genius</Link>
-          </div>
-        </div>
-      </header>
+      {/* BACKGROUND (SAME AS HOME) */}
+      <div className="bg-glow glow-1"></div>
+      <div className="bg-glow glow-2"></div>
+      <div className="bg-grid"></div>
 
-      {/* LAYOUT */}
-      <div className="business-layout">
+      {/* HEADER (NOW SAME STYLE AS HOME) */}
+      <motion.header
+        className="sb-header"
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+      >
+        <button className="menu-btn" onClick={() => setSidebarOpen(true)}>
+          ☰
+        </button>
 
-        {/* SIDEBAR */}
-        <aside className="sidebar">
-          <nav>
-            <NavLink to="/dashboard">Home</NavLink>
-            <NavLink to="/start-business">Start Business</NavLink>
-            <NavLink to="/manufacturers">Manufacturers</NavLink>
-            <NavLink to="/aichat">AI Chatbot</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-            <NavLink to="/about">About</NavLink>
-          </nav>
-        </aside>
+        <Link to="/dashboard" className="logo">
+          Startup Genius
+        </Link>
 
-        {/* MAIN */}
-        <main className="container">
-          <h2>Start Your Clothing Business</h2>
+        <motion.div
+          className="sb-selected-badge"
+          animate={{
+            scale: selectedItems.length ? [1, 1.08, 1] : 1
+          }}
+        >
+          {selectedItems.length} Selected
+        </motion.div>
+      </motion.header>
+
+      {/* OVERLAY */}
+      {sidebarOpen && (
+        <div className="overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      {/* SIDEBAR (HOME STYLE) */}
+      <motion.aside
+        className="sidebar"
+        initial={false}
+        animate={{ x: sidebarOpen ? 0 : -300 }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 20,
+          mass: 1
+        }}
+      >
+        <nav>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/start-business">Start Business</NavLink>
+          <NavLink to="/aichat">AI Chatbot</NavLink>
+          <NavLink to="/manufacturers">Manufacturers</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/about">About</NavLink>
+        </nav>
+      </motion.aside>
+
+      {/* MAIN */}
+      <div className="sb-layout">
+
+        <main className="sb-main">
+
+          <motion.div
+            className="sb-title"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <h1>Choose Your Products</h1>
+            <p>Build your clothing business inventory professionally.</p>
+          </motion.div>
 
           {Object.entries(ITEMS).map(([category, items]) => (
-            <div key={category} className="category">
-              <h3>{category.replace(/-/g, " ").toUpperCase()}</h3>
+            <section className="sb-section" key={category}>
 
-              <div className="options-grid">
+              <div className="section-head">
+                <h3>{category.toUpperCase()}</h3>
+                <span>
+                  {selectedItems.filter(i => i.category === category).length} Selected
+                </span>
+              </div>
+
+              <div className="sb-grid">
                 {items.map(item => (
-                  <div
+                  <motion.div
                     key={item.id}
-                    className={`option-card ${
+                    className={`sb-card ${
                       isSelected(category, item.id) ? "selected" : ""
                     }`}
-                    onClick={() =>
-                      toggleItem(category, item.id, item.name, item.img)
-                    }
+                    onClick={() => toggleItem(category, item)}
+                    whileHover={{ y: -8, scale: 1.02 }}
                   >
-                    <img src={item.img} alt={item.name} />
-                    <span>{item.name}</span>
-                  </div>
+                    <div className="img-box">
+                      <img src={item.img} alt={item.name} />
+                    </div>
+
+                    <div className="sb-card-footer">
+                      <span>{item.name}</span>
+                      <input
+                        type="checkbox"
+                        checked={isSelected(category, item.id)}
+                        onChange={() => toggleItem(category, item)}
+                        onClick={e => e.stopPropagation()}
+                      />
+                    </div>
+                  </motion.div>
                 ))}
               </div>
-            </div>
+
+            </section>
           ))}
 
-          {/* SELECTED ITEMS */}
-          <div className="selected-items">
-            <h3>Your Selections</h3>
+        </main>
 
-            <div className="selected-grid">
-              {selectedItems.length === 0 ? (
-                <p style={{ color: "#969595" }}>No items selected</p>
-              ) : (
-                selectedItems.map((item, index) => (
-                  <div key={index} className="selected-item">
-                    <img src={item.img} alt={item.name} />
-                    <span>{item.name}</span>
-                  </div>
-                ))
-              )}
+        {/* RIGHT PANEL (UNCHANGED LOGIC) */}
+        <aside className="sb-right">
+
+          <div className="sb-right-top">
+            <div>
+              <h3>Your Selection</h3>
+              <p>{selectedItems.length} Products Selected</p>
+            </div>
+
+            <div className="selection-circle">
+              {selectedItems.length}
             </div>
           </div>
 
-          {/* APPLY BUTTON */}
-          <div className="apply-container">
-            <button className="btn" onClick={handleApply}>
-              Apply
-            </button>
+          <div className="selected-list">
+            {selectedItems.length === 0 ? (
+              <p className="empty-selection">No items selected</p>
+            ) : (
+              selectedItems.map(item => (
+                <div key={item.id} className="sb-selected-item">
+                  <div>
+                    <strong>{item.name}</strong>
+                    <small>{item.category}</small>
+                  </div>
+
+                  <button onClick={() => removeItem(item.category, item.id)}>
+                    ✕
+                  </button>
+                </div>
+              ))
+            )}
           </div>
 
-        </main>
+          <button className="sb-btn" onClick={handleApply}>
+            Continue →
+          </button>
+
+        </aside>
+
       </div>
     </div>
   );

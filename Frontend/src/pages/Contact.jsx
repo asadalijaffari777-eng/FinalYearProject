@@ -1,92 +1,140 @@
+import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import "./Contact.css";
 
 function Contact() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="contact-page">
 
+      {/* BACKGROUND */}
+      <div className="bg-glow glow-1"></div>
+      <div className="bg-glow glow-2"></div>
+      <div className="bg-grid"></div>
+
       {/* HEADER */}
-      <header>
-        <div className="container header-container">
-          <div className="logo">
-            <Link to="/dashboard">Startup Genius</Link>
-          </div>
+      <motion.header
+        className="contact-header"
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+      >
+        <div className="header-left">
+          <button
+            className="menu-btn"
+            onClick={() => setMenuOpen(true)}
+          >
+            ☰
+          </button>
+
+          <Link to="/dashboard" className="logo">
+            Startup Genius
+          </Link>
         </div>
-      </header>
 
-      {/* LAYOUT */}
-      <div className="contact-layout">
+        <div className="contact-badge">
+          Contact Team
+        </div>
+      </motion.header>
 
-        {/* SIDEBAR */}
-        <aside className="sidebar">
+      {/* OVERLAY */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="overlay"
+            onClick={() => setMenuOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
 
-          <nav>
-            <NavLink to="/dashboard" className={({ isActive }) => isActive ? "active" : ""}>
-              Home
-            </NavLink>
+      {/* SIDEBAR */}
+      <motion.aside
+        className={`sidebar ${menuOpen ? "open" : ""}`}
+        initial={false}
+        animate={{
+          x: menuOpen ? 0 : -300
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 120
+        }}
+      >
+        <div className="sidebar-top">
+          <h2>Menu</h2>
 
-            <NavLink
-              to="/start-business"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              Start Business
-            </NavLink>
+          <button onClick={() => setMenuOpen(false)}>
+            ✕
+          </button>
+        </div>
 
-            <NavLink
-              to="/manufacturers"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              Manufacturers
-            </NavLink>
+        <nav>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/start-business">Start Business</NavLink>
+          <NavLink to="/manufacturers">Manufacturers</NavLink>
+          <NavLink to="/aichat">AI Chatbot</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/about">About</NavLink>
+        </nav>
+      </motion.aside>
 
-            <NavLink
-              to="/contact"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              Contact
-            </NavLink>
+      {/* MAIN */}
+      <main className="contact-container">
 
-            <NavLink to="/aichat" className={({ isActive }) => isActive ? "active" : ""}>
-              AI Chatbot
-            </NavLink>
+        <motion.div
+          className="contact-card"
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
 
-            <NavLink to="/about" className={({ isActive }) => isActive ? "active" : ""}>
-              About
-            </NavLink>
+          <div className="contact-title">
+            <h1>Contact Us</h1>
 
-          </nav>
-        </aside>
-
-        {/* MAIN */}
-        <main className="container">
-          <div className="content-page">
-            <h2>Contact Us</h2>
-
-            <div className="contact-list">
-
-              <div className="contact-item">
-                <h3>Muhammad Bilal</h3>
-                <p>CMS: 60619</p>
-                <p>Email: <a href="mailto:Bilal@buitems.com">Bilal@buitems.com</a></p>
-              </div>
-
-              <div className="contact-item">
-                <h3>Mustafa</h3>
-                <p>CMS: 61255</p>
-                <p>Email: <a href="mailto:Mustafa@buitems.com">Mustafa@buitems.com</a></p>
-              </div>
-
-              <div className="contact-item">
-                <h3>Asad Ullah</h3>
-                <p>CMS: 61984</p>
-                <p>Email: <a href="mailto:Asad@buitems.com">Asad@buitems.com</a></p>
-              </div>
-
-            </div>
+            <p>
+              Meet the development team behind Startup Genius.
+            </p>
           </div>
-        </main>
 
-      </div>
+          <div className="contact-list">
+
+            <div className="contact-item">
+              <h3>Muhammad Bilal</h3>
+
+              <p>CMS: 60619</p>
+
+              <a href="mailto:Bilal@buitems.com">
+                Bilal@buitems.com
+              </a>
+            </div>
+
+            <div className="contact-item">
+              <h3>Mustafa</h3>
+
+              <p>CMS: 61255</p>
+
+              <a href="mailto:Mustafa@buitems.com">
+                Mustafa@buitems.com
+              </a>
+            </div>
+
+            <div className="contact-item">
+              <h3>Asad Ullah</h3>
+
+              <p>CMS: 61984</p>
+
+              <a href="mailto:Asad@buitems.com">
+                Asad@buitems.com
+              </a>
+            </div>
+
+          </div>
+
+        </motion.div>
+
+      </main>
     </div>
   );
 }

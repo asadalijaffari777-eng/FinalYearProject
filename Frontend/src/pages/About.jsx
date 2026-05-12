@@ -1,99 +1,133 @@
+import { useState } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import "./About.css";
 
 function About() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="about-page">
 
+      {/* BACKGROUND */}
+      <div className="bg-glow glow-1"></div>
+      <div className="bg-glow glow-2"></div>
+      <div className="bg-grid"></div>
+
       {/* HEADER */}
-      <header>
-        <div className="container header-container">
-          <div className="logo">
-            <Link to="/dashboard">Startup Genius</Link>
-          </div>
+      <motion.header
+        className="about-header"
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+      >
+        <button
+          className="menu-btn"
+          onClick={() => setMenuOpen(true)}
+        >
+          ☰
+        </button>
+
+        <Link to="/dashboard" className="logo">
+          Startup Genius
+        </Link>
+
+        <div className="about-badge">
+          About Us
         </div>
-      </header>
+      </motion.header>
 
-      {/* LAYOUT */}
-      <div className="about-layout">
+      {/* OVERLAY */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="overlay"
+            onClick={() => setMenuOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+        )}
+      </AnimatePresence>
 
-        {/* SIDEBAR */}
-        <aside className="sidebar">
+      {/* SIDEBAR */}
+      <motion.aside
+        className={`sidebar ${menuOpen ? "open" : ""}`}
+        initial={false}
+        animate={{ x: menuOpen ? 0 : -300 }}
+        transition={{
+          type: "spring",
+          stiffness: 120,
+          damping: 20
+        }}
+      >
+        <div className="sidebar-top">
+          <h2>Menu</h2>
 
-          <nav>
-            <NavLink to="/dashboard">Home</NavLink>
+          <button onClick={() => setMenuOpen(false)}>
+            ✕
+          </button>
+        </div>
 
-            <NavLink
-              to="/start-business"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              Start Business
-            </NavLink>
+        <nav>
+          <NavLink onClick={() => setMenuOpen(false)} to="/dashboard">
+            Dashboard
+          </NavLink>
 
-            <NavLink
-              to="/manufacturers"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              Manufacturers
-            </NavLink>
+          <NavLink onClick={() => setMenuOpen(false)} to="/start-business">
+            Start Business
+          </NavLink>
 
-            <NavLink
-              to="/contact"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              Contact
-            </NavLink>
+          <NavLink onClick={() => setMenuOpen(false)} to="/manufacturers">
+            Manufacturers
+          </NavLink>
 
-            <NavLink
-              to="/aichat"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              AI Chatbot
-            </NavLink>
+          <NavLink onClick={() => setMenuOpen(false)} to="/aichat">
+            AI Chatbot
+          </NavLink>
 
-            <NavLink
-              to="/about"
-              className={({ isActive }) => isActive ? "active" : ""}
-            >
-              About
-            </NavLink>
-          </nav>
-        </aside>
+          <NavLink onClick={() => setMenuOpen(false)} to="/contact">
+            Contact
+          </NavLink>
 
-        {/* MAIN */}
-        <main className="container">
-          <div className="content-page">
-            <h2>About Startup Genius</h2>
+          <NavLink onClick={() => setMenuOpen(false)} to="/about">
+            About
+          </NavLink>
+        </nav>
+      </motion.aside>
 
-            <div className="about-content">
-              <p>
-                Startup Genius helps beginners launch and grow a clothing business
-                with structured guidance and practical tools.
-              </p>
+      {/* MAIN */}
+      <main className="about-container">
 
-              <h3>How It Works</h3>
-              <p>
-                You select clothing items, and the system guides you with:
-              </p>
+        <motion.div
+          className="about-card"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1>About Startup Genius</h1>
 
-              <ul>
-                <li><strong>Manufacturer suggestions</strong> based on your selections</li>
-                <li><strong>Market insights</strong> to understand competition</li>
-                <li><strong>Business direction</strong> for pricing and growth</li>
-              </ul>
+          <p>
+            Startup Genius helps beginners launch and grow a clothing business
+            with structured guidance, product planning, AI assistance, and
+            manufacturer discovery.
+          </p>
 
-              <p>
-                The goal is simple: remove confusion and give you a clear path to start.
-              </p>
+          <div className="about-section">
+            <h3>What You Can Do</h3>
 
-              <Link to="/start-business" className="btn">
-                Start Your Business Journey
-              </Link>
-            </div>
+            <ul>
+              <li>Discover manufacturers</li>
+              <li>Build your inventory</li>
+              <li>Get AI business guidance</li>
+              <li>Plan your startup direction</li>
+            </ul>
           </div>
-        </main>
 
-      </div>
+          <Link to="/start-business" className="about-btn">
+            Start Your Business →
+          </Link>
+        </motion.div>
+
+      </main>
     </div>
   );
 }

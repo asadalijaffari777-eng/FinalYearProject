@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../Services/api";
+import { motion } from "framer-motion";
 import "./Login.css";
 
 function Login() {
@@ -13,10 +14,7 @@ function Login() {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -42,53 +40,64 @@ function Login() {
   return (
     <div className="login-page">
 
-      {/* LEFT SIDE */}
-      <div className="login-left">
-        <div className="overlay"></div>
-        <div className="left-content">
-          <h1>Startup Genius</h1>
-          <p>
-            Start your clothing business the smart way. Step-by-step guidance for beginners.
-          </p>
+      <div className="mesh-bg"></div>
+      <div className="noise"></div>
+
+      <motion.div
+        className="login-wrapper"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+
+        {/* LEFT HERO */}
+        <div className="login-hero">
+          <div className="hero-content">
+            <span className="hero-badge">Startup Genius</span>
+
+            <h1>
+              Welcome
+              <br />
+              Back.
+            </h1>
+
+            <p>
+              Continue building your clothing business with AI-powered guidance.
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* RIGHT SIDE */}
-      <div className="login-right">
-        <div className="login-box">
+        {/* RIGHT PANEL */}
+        <div className="login-panel">
 
-          <h2>Welcome Back</h2>
-          <p className="subtitle">Login to continue</p>
+          <div className="panel-top">
+            <h2>Login</h2>
+            <p>Access your dashboard</p>
+          </div>
 
           <form onSubmit={handleSubmit}>
 
-            <div className="input-group">
+            <div className="input-box">
               <label>Email</label>
               <input
-                type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="Enter your email"
+                type="email"
               />
             </div>
 
-            <div className="input-group">
+            <div className="input-box">
               <label>Password</label>
               <input
-                type="password"
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                placeholder="Enter your password"
+                type="password"
               />
             </div>
 
-            <button type="submit" className="login-btn">
-              Login
-            </button>
+            <button className="login-btn">Login</button>
 
-            {/*GOOGLE LOGIN */}
             <button
               type="button"
               className="google-btn"
@@ -101,17 +110,18 @@ function Login() {
 
           </form>
 
-          {message && <p className="error">{message}</p>}
+          {message && <p className="error-msg">{message}</p>}
 
-          <p className="switch">
-            Don't have an account?{" "}
-            <span onClick={() => navigate("/register")}>
-              Register
+          <div className="bottom-text">
+            New here?
+            <span className="createAccountBtn" onClick={() => navigate("/register")}>
+              Create Account
             </span>
-          </p>
+          </div>
 
         </div>
-      </div>
+
+      </motion.div>
 
     </div>
   );

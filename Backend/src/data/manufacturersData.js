@@ -53,7 +53,7 @@ const manufacturersData = [
     },
     contact: {
       email: "info@interloop.com",
-      phone: "+92-41-0000000"
+      phone: ""
     }
   },
 
@@ -72,7 +72,7 @@ const manufacturersData = [
     },
     contact: {
       email: "info@soorty.com",
-      phone: "+92-21-0000000"
+      phone: ""
     }
   },
 
@@ -110,7 +110,7 @@ const manufacturersData = [
     },
     contact: {
       email: "info@gulahmed.com",
-      phone: "+92-21-0000000"
+      phone: ""
     }
   },
 
@@ -129,7 +129,7 @@ const manufacturersData = [
     },
     contact: {
       email: "info@alkaram.com",
-      phone: "+92-21-0000000"
+      phone: ""
     }
   },
 
@@ -148,7 +148,7 @@ const manufacturersData = [
     },
     contact: {
       email: "info@sarena.com",
-      phone: "+92-41-0000000"
+      phone: ""
     }
   },
 
@@ -167,7 +167,7 @@ const manufacturersData = [
     },
     contact: {
       email: "info@usapparel.com",
-      phone: "+92-42-0000000"
+      phone: ""
     }
   },
 
@@ -186,7 +186,7 @@ const manufacturersData = [
     },
     contact: {
       email: "info@artisticmilliners.com",
-      phone: "+92-21-0000000"
+      phone: ""
     }
   },
 

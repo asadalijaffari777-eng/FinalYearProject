@@ -1,9 +1,13 @@
+
 import { useState } from "react";
 import API from "../Services/api";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import "./Register.css";
 
 function Register() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -11,7 +15,6 @@ function Register() {
   });
 
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({
@@ -31,88 +34,123 @@ function Register() {
       const res = await API.post("/register", form);
 
       if (res.data.success) {
-        navigate("/verify", { state: { email: form.email } });
+        navigate("/verify", {
+          state: { email: form.email },
+        });
       } else {
         setMessage(res.data.message);
       }
     } catch (err) {
-      setMessage(err.response?.data?.message || "Registration failed");
+      setMessage(
+        err.response?.data?.message ||
+        "Registration failed"
+      );
     }
   };
 
   return (
     <div className="register-page">
 
-      {/* LEFT SIDE */}
-      <div className="register-left">
-        <div className="overlay"></div>
-        <div className="left-content">
-          <h1>Startup Genius</h1>
-          <p>
-            Build your clothing brand from scratch with step-by-step guidance.
-          </p>
+      <div className="mesh-bg"></div>
+      <div className="noise"></div>
+
+      <motion.div
+        className="register-wrapper"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+
+        {/* LEFT */}
+        <div className="register-hero">
+
+          <div className="hero-content">
+            <span className="hero-badge">
+              AI Powered Platform
+            </span>
+
+            <h1>
+              Build
+              <br />
+              Fashion Brands
+              <br />
+              Faster.
+            </h1>
+
+            <p>
+              Launch your clothing business with AI guidance,
+              supplier discovery, and smart business planning.
+            </p>
+          </div>
+
         </div>
-      </div>
 
-      {/* RIGHT SIDE */}
-      <div className="register-right">
-        <div className="register-box">
+        {/* RIGHT */}
+        <div className="register-panel">
 
-          <h2>Create Account</h2>
-          <p className="subtitle">Start your journey today</p>
+          <div className="panel-top">
+            <h2>Create Account</h2>
+            <p>
+              Start building your startup professionally.
+            </p>
+          </div>
 
-          <form onSubmit={handleRegister} autoComplete="off">
+          <form onSubmit={handleRegister}>
 
-            <div className="input-group">
+            <div className="input-box">
               <label>Name</label>
+
               <input
                 type="text"
                 name="username"
                 value={form.username}
                 onChange={handleChange}
-                placeholder="Enter your name"
               />
             </div>
 
-            <div className="input-group">
+            <div className="input-box">
               <label>Email</label>
+
               <input
                 type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                placeholder="Enter your email"
               />
             </div>
 
-            <div className="input-group">
+            <div className="input-box">
               <label>Password</label>
+
               <input
                 type="password"
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                placeholder="Enter your password"
               />
             </div>
 
             <button type="submit" className="register-btn">
-              Register
+              Create Account
             </button>
 
           </form>
 
-          {message && <p className="error">{message}</p>}
+          {message && (
+            <p className="error-msg">{message}</p>
+          )}
 
-          <p className="switch">
-            Already have an account?{" "}
+          <div className="bottom-text">
+            Already have an account?
+
             <span onClick={() => navigate("/")}>
               Login
             </span>
-          </p>
+          </div>
 
         </div>
-      </div>
+
+      </motion.div>
 
     </div>
   );

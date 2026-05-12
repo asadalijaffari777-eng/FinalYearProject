@@ -98,7 +98,7 @@ exports.login = async (req, res)=>{
 
       res.cookie('token', token, {
         httpOnly: true,
-        maxAge: 2 * 60 * 1000, // 2 minutes
+        maxAge: 5 * 60 * 1000, // 5 minutes
         sameSite: 'lax',       // cross-origin allowed in dev
         path: '/',             // make cookie available for all routes
         secure: false           // must be false on localhost/http
@@ -142,7 +142,7 @@ exports.verify = async(req, res)=>{
       await user.save()
       res.cookie('token', token, {
         httpOnly: true,
-        maxAge: 2 * 60 * 1000, // 2 minutes
+        maxAge: 5 * 60 * 1000, // 5 minutes
         sameSite: 'lax',       // cross-origin allowed in dev
         path: '/',             // make cookie available for all routes
         secure: false           // must be false on localhost/http

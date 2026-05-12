@@ -1,92 +1,184 @@
-/* Full page background */
-.verify-page {
-    height: 100vh;
-    background:
-    linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-    url('/images/login-bg.jpg');
+.verify-page,
+.verify-page * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* ROOT */
+.verify-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px;
+
+  background: #050816;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* BACKGROUND */
+.verify-page .mesh-bg {
+  position: fixed;
+  inset: 0;
+
+  background:
+    radial-gradient(circle at top left, rgba(37,99,235,.45), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(124,58,237,.4), transparent 30%);
+}
+
+.verify-page .noise {
+  position: fixed;
+  inset: 0;
+  opacity: .04;
+  background-image: repeating-radial-gradient(circle, #fff 1px, transparent 2px);
+  background-size: 24px 24px;
+}
+
+/* WRAPPER */
+.verify-page .verify-wrapper {
+  width: min(1100px, 100%);
+
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+
+  border-radius: 34px;
+  overflow: hidden;
+
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+
+  backdrop-filter: blur(22px);
+
+  position: relative;
+}
+
+/* HERO */
+.verify-page .verify-hero {
+  padding: 60px;
+
+  display: flex;
+  align-items: flex-end;
+
+  background:
+    linear-gradient(rgba(2,6,23,.6), rgba(2,6,23,.9)),
+    url("/images/login-bg.jpg");
+
+  background-size: cover;
+  background-position: center;
+}
+
+.verify-page .hero-badge {
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,.08);
+  color: white;
+  font-size: 13px;
+}
+
+.verify-page .verify-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: white;
+  margin: 20px 0;
+}
+
+.verify-page .verify-hero p {
+  color: rgba(255,255,255,.7);
+}
+
+/* PANEL */
+.verify-page .verify-panel {
+  padding: 60px 40px;
+}
+
+.verify-page .panel-top h2 {
+  font-size: 38px;
+  color: white;
+}
+
+.verify-page .panel-top p {
+  color: rgba(255,255,255,.6);
+  margin-bottom: 30px;
+}
+
+/* INPUT */
+.verify-page .input-box {
+  margin-bottom: 20px;
+}
+
+.verify-page .input-box label {
+  color: rgba(255,255,255,.8);
+  font-size: 13px;
+}
+
+.verify-page .input-box input {
+  width: 100%;
+  padding: 16px;
+  margin-top: 8px;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.08);
+
+  background: rgba(255,255,255,.06);
+  color: white;
+
+  text-align: center;
+  letter-spacing: 6px;
+}
+
+/* BUTTON */
+.verify-page .verify-btn {
+  width: 100%;
+  padding: 16px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+
+  color: white;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.verify-page .verify-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* ERROR */
+.verify-page .error-msg {
+  margin-top: 15px;
+  color: #fca5a5;
+  text-align: center;
+}
+
+/* fallback screen */
+.verify-page .error-screen {
+  color: white;
+  font-size: 18px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .verify-page .verify-wrapper {
+    grid-template-columns: 1fr;
   }
-  
-  /* Dark overlay for luxury feel */
-  .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
+
+  .verify-page .verify-hero {
+    min-height: 260px;
   }
-  
-  /* Center container */
-  .verify-container {
-    position: relative;
-    z-index: 2;
+}
+
+@media (max-width: 500px) {
+  .verify-page .verify-hero {
+    display: none;
   }
-  
-  /* Card */
-  .verify-box {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(15px);
-    padding: 40px;
-    border-radius: 12px;
-    width: 350px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+  .verify-page .verify-panel {
+    padding: 30px 20px;
   }
-  
-  /* Heading */
-  .verify-box h2 {
-    margin-bottom: 10px;
-    font-size: 24px;
-    letter-spacing: 1px;
-  }
-  
-  /* Subtitle */
-  .subtitle {
-    font-size: 14px;
-    margin-bottom: 20px;
-    color: #ccc;
-  }
-  
-  /* Input */
-  .verify-box input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 6px;
-    border: none;
-    margin-bottom: 15px;
-    font-size: 16px;
-    outline: none;
-    text-align: center;
-    letter-spacing: 3px;
-  }
-  
-  /* Button */
-  .verify-box button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    background: #111;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 6px;
-    transition: 0.3s;
-  }
-  
-  .verify-box button:hover {
-    background: #333;
-  }
-  
-  /* Message */
-  .message {
-    margin-top: 15px;
-    font-size: 14px;
-    color: #f1c40f;
-  }
+}

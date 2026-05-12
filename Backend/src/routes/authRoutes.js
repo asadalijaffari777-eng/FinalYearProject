@@ -30,7 +30,7 @@ router.get(
         res.cookie('token', token,
             {
                 httpOnly: true,
-                maxAge: 2 * 60 * 1000
+                maxAge: 5 * 60 * 1000
             }
         );
         res.redirect('http://localhost:5173/dashboard')
