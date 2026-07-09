@@ -11,10 +11,14 @@ function Login() {
   });
 
   const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -28,12 +32,20 @@ function Login() {
       const res = await API.post("/login", form);
 
       if (res.data.success) {
-        navigate("/dashboard");
+        localStorage.removeItem("businessSelections");
+        if (res.data.user?.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/dashboard");
+        }
       } else {
         setMessage(res.data.message);
       }
     } catch (err) {
-      setMessage(err.response?.data?.message || "Login failed");
+      setMessage(
+        err.response?.data?.message ||
+        "Login failed"
+      );
     }
   };
 
@@ -47,62 +59,95 @@ function Login() {
         className="login-wrapper"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
 
-        {/* LEFT HERO */}
+        {/* LEFT */}
+
         <div className="login-hero">
+
           <div className="hero-content">
-            <span className="hero-badge">Startup Genius</span>
+
+            <span className="hero-badge">
+              AI Powered Platform
+            </span>
 
             <h1>
               Welcome
               <br />
-              Back.
+              Back To
+              <br />
+              Startup Genius
             </h1>
 
             <p>
-              Continue building your clothing business with AI-powered guidance.
+              Continue your startup journey with AI guidance,
+              supplier discovery, and smart business planning.
             </p>
+
           </div>
+
         </div>
 
-        {/* RIGHT PANEL */}
+        {/* RIGHT */}
+
         <div className="login-panel">
 
           <div className="panel-top">
+
             <h2>Login</h2>
-            <p>Access your dashboard</p>
+
+            <p>
+              Sign in to access your account.
+            </p>
+
           </div>
 
           <form onSubmit={handleSubmit}>
 
             <div className="input-box">
+
               <label>Email</label>
+
               <input
+                type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                type="email"
               />
+
             </div>
 
             <div className="input-box">
+
               <label>Password</label>
+
               <input
+                type="password"
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                type="password"
               />
+
             </div>
 
-            <button className="login-btn">Login</button>
+            <button
+              type="submit"
+              className="login-btn"
+            >
+              Sign In
+            </button>
+
+            <div className="divider">
+              <span>OR</span>
+            </div>
 
             <button
               type="button"
               className="google-btn"
               onClick={() => {
-                window.location.href = "http://localhost:3001/fyp/google";
+                window.location.href =
+                  "http://localhost:3001/fyp/google";
               }}
             >
               Continue with Google
@@ -110,13 +155,24 @@ function Login() {
 
           </form>
 
-          {message && <p className="error-msg">{message}</p>}
+          {message && (
+            <p className="error-msg">
+              {message}
+            </p>
+          )}
 
           <div className="bottom-text">
-            New here?
-            <span className="createAccountBtn" onClick={() => navigate("/register")}>
-              Create Account
+
+            Don't have an account?
+
+            <span
+              onClick={() =>
+                navigate("/register")
+              }
+            >
+              Register
             </span>
+
           </div>
 
         </div>

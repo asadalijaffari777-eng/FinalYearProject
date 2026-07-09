@@ -109,7 +109,8 @@ exports.login = async (req, res)=>{
         messageLogin: "User Found",
         user: {
           username: user.username,
-          email: user.email },
+          email: user.email,
+          role: user.role },
       });
   }catch(err){
     console.log('Login error: ', err);

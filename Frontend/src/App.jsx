@@ -4,11 +4,16 @@ import Verify from "./pages/Verify";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ProtectedRoute from "./component/ProtectedRoute";
+import AdminRoute from "./component/AdminRoute";
 import StartBusiness from "./pages/StartBusiness";
 import AIChat from "./pages/AIChat";
 import Manufacturers from "./pages/Manufacturers";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminUsers from "./pages/AdminUsers";
+import AdminManufacturers from "./pages/AdminManufacturers";
+import AdminItems from "./pages/AdminItems";
 
 function App() {
   return (
@@ -16,13 +21,21 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/verify" element={<Verify />} />
-      <Route path="/dashboard" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-      <Route path="/start-business" element={<ProtectedRoute><StartBusiness /></ProtectedRoute>} />
-      <Route path="/aichat" element={<ProtectedRoute><AIChat /></ProtectedRoute>} />
-      <Route path="/manufacturers" element={<ProtectedRoute><Manufacturers /></ProtectedRoute>} />
-      <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-      <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-      
+
+      <Route element={<ProtectedRoute />}>
+        <Route path="/dashboard" element={<Home />} />
+        <Route path="/start-business" element={<StartBusiness />} />
+        <Route path="/aichat" element={<AIChat />} />
+        <Route path="/manufacturers" element={<Manufacturers />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/manufacturers" element={<AdminManufacturers />} />
+          <Route path="/admin/items" element={<AdminItems />} />
+        </Route>
+      </Route>
     </Routes>
   );
 }

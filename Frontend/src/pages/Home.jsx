@@ -29,6 +29,7 @@ function Home() {
     } catch (err) {
       alert("Logout failed");
     } finally {
+      localStorage.removeItem("businessSelections");
       setShowLogoutModal(false);
     }
   };
@@ -136,6 +137,12 @@ function Home() {
             <NavLink to="/about">
               About
             </NavLink>
+
+            {user?.role === "admin" && (
+              <NavLink to="/admin" className="admin-link">
+                Admin Panel
+              </NavLink>
+            )}
           </nav>
         </motion.aside>
 

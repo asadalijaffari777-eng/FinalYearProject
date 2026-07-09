@@ -35,8 +35,17 @@ export default function StartBusiness() {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) setSelectedItems(JSON.parse(saved));
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          setSelectedItems(parsed);
+        } else if (parsed?.items && Array.isArray(parsed.items)) {
+          setSelectedItems(parsed.items);
+        }
+      }
+    } catch { /* ignore corrupt data */ }
   }, []);
 
   useEffect(() => {

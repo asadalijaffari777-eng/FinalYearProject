@@ -1,0 +1,635 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.admin-mfr-page {
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(rgba(2, 6, 23, 0.88), rgba(2, 6, 23, 0.92));
+  position: relative;
+  color: white;
+}
+
+/* BG */
+.admin-mfr-page .bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 0;
+}
+
+.admin-mfr-page .bg-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 0;
+  opacity: 0.35;
+}
+
+.admin-mfr-page .glow-1 {
+  width: 320px;
+  height: 320px;
+  background: #2563eb;
+  top: -80px;
+  left: -80px;
+}
+
+.admin-mfr-page .glow-2 {
+  width: 300px;
+  height: 300px;
+  background: #7c3aed;
+  bottom: -100px;
+  right: -100px;
+}
+
+/* HEADER */
+.admin-mfr-page .am-header {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 28px;
+  backdrop-filter: blur(14px);
+  background: rgba(8, 17, 32, 0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.admin-mfr-page .am-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-mfr-page .menu-btn {
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-size: 18px;
+}
+
+.admin-mfr-page .menu-btn:hover {
+  background: rgba(255,255,255,0.16);
+  transform: scale(1.05);
+}
+
+.admin-mfr-page .logo {
+  font-size: 24px;
+  font-weight: 800;
+  color: white;
+}
+
+.admin-mfr-page .am-badge {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: white;
+  backdrop-filter: blur(12px);
+  font-weight: 700;
+}
+
+/* OVERLAY */
+.admin-mfr-page .overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+}
+
+/* SIDEBAR */
+.admin-mfr-page .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 270px;
+  height: 100vh;
+  padding: 28px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.08);
+  z-index: 1100;
+}
+
+.admin-mfr-page .sidebar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.admin-mfr-page .sidebar-top h3 {
+  font-size: 22px;
+  color: white;
+}
+
+.admin-mfr-page .sidebar-top button {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  cursor: pointer;
+}
+
+.admin-mfr-page .sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-mfr-page .sidebar a {
+  text-decoration: none;
+  padding: 14px 18px;
+  border-radius: 16px;
+  color: white;
+  transition: 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-mfr-page .sidebar a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.admin-mfr-page .sidebar a:hover::before {
+  opacity: 1;
+}
+
+.admin-mfr-page .sidebar a:hover {
+  transform: translateX(6px);
+}
+
+.admin-mfr-page .sidebar a.active {
+  background: linear-gradient(135deg, #2563eb, #4f46e5);
+  box-shadow: 0 10px 25px rgba(37,99,235,0.35);
+}
+
+/* LAYOUT */
+.admin-mfr-page .am-layout {
+  position: relative;
+  z-index: 2;
+  padding: 28px;
+}
+
+.admin-mfr-page .am-content {
+  position: relative;
+  z-index: 2;
+}
+
+.admin-mfr-page .am-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.admin-mfr-page .am-title h1 {
+  font-size: 42px;
+  font-weight: 800;
+}
+
+.admin-mfr-page .am-title p {
+  color: rgba(255,255,255,0.7);
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.admin-mfr-page .am-add-btn {
+  padding: 14px 24px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+  white-space: nowrap;
+}
+
+.admin-mfr-page .am-add-btn:hover {
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* GRID */
+.admin-mfr-page .am-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* CARD */
+.admin-mfr-page .am-card {
+  border-radius: 24px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  transition: 0.3s ease;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+.admin-mfr-page .am-card-img {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+}
+
+.admin-mfr-page .am-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.4s ease;
+}
+
+.admin-mfr-page .am-card:hover .am-card-img img {
+  transform: scale(1.08);
+}
+
+.admin-mfr-page .am-card-body {
+  padding: 22px;
+}
+
+.admin-mfr-page .am-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.admin-mfr-page .am-type-badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-mfr-page .am-type-badge.small {
+  background: rgba(52, 211, 153, 0.15);
+  color: #6ee7b7;
+}
+
+.admin-mfr-page .am-type-badge.medium {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+
+.admin-mfr-page .am-type-badge.large {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fcd34d;
+}
+
+.admin-mfr-page .am-location {
+  color: rgba(255,255,255,0.55);
+  font-size: 13px;
+  margin-bottom: 12px;
+}
+
+.admin-mfr-page .am-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.admin-mfr-page .am-tags span {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.8);
+}
+
+.admin-mfr-page .am-card-info {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 10px;
+}
+
+.admin-mfr-page .am-card-links a {
+  color: #93c5fd;
+  text-decoration: none;
+  font-size: 13px;
+  margin-right: 12px;
+}
+
+.admin-mfr-page .am-card-links a:hover {
+  text-decoration: underline;
+}
+
+.admin-mfr-page .am-edit-btn,
+.admin-mfr-page .am-del-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.admin-mfr-page .am-edit-btn {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+
+.admin-mfr-page .am-edit-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+}
+
+.admin-mfr-page .am-del-btn {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}
+
+.admin-mfr-page .am-del-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+/* LOADING */
+.admin-mfr-page .am-loading {
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
+}
+
+/* FORM OVERLAY */
+.admin-mfr-page .form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  padding: 20px;
+}
+
+.admin-mfr-page .form-modal {
+  width: min(680px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  padding: 32px;
+  backdrop-filter: blur(24px);
+}
+
+.admin-mfr-page .form-image-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.admin-mfr-page .form-image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Card body (wraps content below image) ── */
+
+.admin-mfr-page .am-card-body .am-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.admin-mfr-page .am-card-body .am-card-links {
+  margin-bottom: 14px;
+}
+
+.admin-mfr-page .am-card-body .am-card-actions {
+  display: flex;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.admin-mfr-page .form-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.admin-mfr-page .form-modal-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.admin-mfr-page .form-close {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.admin-mfr-page .form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.admin-mfr-page .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.admin-mfr-page .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-mfr-page .form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+}
+
+.admin-mfr-page .form-group input,
+.admin-mfr-page .form-group select {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.05);
+  color: white;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: 0.2s;
+}
+
+.admin-mfr-page .form-group input:focus,
+.admin-mfr-page .form-group select:focus {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08);
+}
+
+.admin-mfr-page .form-group input::placeholder {
+  color: rgba(255,255,255,0.25);
+}
+
+.admin-mfr-page .form-group select option {
+  background: #1e293b;
+  color: white;
+}
+
+.admin-mfr-page .form-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.admin-mfr-page .form-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  padding-top: 8px;
+}
+
+.admin-mfr-page .form-cancel,
+.admin-mfr-page .form-submit {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.admin-mfr-page .form-cancel {
+  background: rgba(255,255,255,0.08);
+  color: white;
+}
+
+.admin-mfr-page .form-cancel:hover {
+  background: rgba(255,255,255,0.14);
+}
+
+.admin-mfr-page .form-submit {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+.admin-mfr-page .form-submit:hover {
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+}
+
+/* DELETE MODAL */
+.admin-mfr-page .modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.admin-mfr-page .modal {
+  width: 360px;
+  padding: 30px;
+  border-radius: 24px;
+  background: white;
+  text-align: center;
+  color: #111;
+}
+
+.admin-mfr-page .modal h3 {
+  margin-bottom: 10px;
+}
+
+.admin-mfr-page .modal p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.admin-mfr-page .modal-buttons {
+  display: flex;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.admin-mfr-page .modal-buttons button {
+  flex: 1;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.admin-mfr-page .danger {
+  background: #ef4444;
+  color: white;
+}
+
+.admin-mfr-page .danger:hover {
+  background: #f82222;
+}
+
+.admin-mfr-page .cancelBtn:hover {
+  background-color: rgb(218, 218, 218);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .admin-mfr-page .am-title {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .admin-mfr-page .am-title h1 {
+    font-size: 32px;
+  }
+
+  .admin-mfr-page .am-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-mfr-page .form-row {
+    grid-template-columns: 1fr;
+  }
+}

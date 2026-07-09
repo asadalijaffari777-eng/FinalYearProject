@@ -2,24 +2,31 @@ const Manufacturer = require("../models/manufacturerSchema");
 
 exports.getManufacturers = async (req, res) => {
   try {
-    const { items } = req.query;
+    const { items, type, priceRange, search } = req.query;
 
-    if (!items) {
-      return res.status(400).json({ message: "Items are required" });
+    let filter = {};
+
+    // filter by categories (existing behavior: "t-shirt,polo-shirt")
+    if (items) {
+      filter.categories = { $in: items.split(",") };
     }
 
-    // convert "t-shirt,polo-shirt" → ["t-shirt", "polo-shirt"]
-    const itemsArray = items.split(",");
-
-    const manufacturers = await Manufacturer.find({
-      categories: { $in: itemsArray }
-    });
-
-    console.log("Found:", manufacturers);
-
-    if (manufacturers.length === 0) {
-      return res.status(404).json({ message: "No manufacturer found" });
+    // filter by manufacturer type
+    if (type) {
+      filter.type = type;
     }
+
+    // filter by price range
+    if (priceRange) {
+      filter.priceRange = priceRange;
+    }
+
+    // search by name
+    if (search) {
+      filter.name = { $regex: search, $options: "i" };
+    }
+
+    const manufacturers = await Manufacturer.find(filter).sort({ name: 1 });
 
     res.json(manufacturers);
 

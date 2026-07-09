@@ -250,6 +250,24 @@
     0 10px 25px rgba(37,99,235,0.35);
 }
 
+.sidebar .admin-link {
+  margin-top: 8px;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+  color: #fcd34d;
+}
+
+.sidebar .admin-link:hover {
+  border-color: rgba(251, 191, 36, 0.4);
+  transform: translateX(6px);
+}
+
+.sidebar .admin-link.active {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  border: none;
+  box-shadow: 0 10px 25px rgba(217, 119, 6, 0.35);
+}
+
 /* =========================
    CONTENT
 ========================= */

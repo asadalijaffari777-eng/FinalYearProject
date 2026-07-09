@@ -7,6 +7,12 @@ const manufacturerSchema = new mongoose.Schema({
     trim: true 
   },
 
+  image: {
+    type: String,
+    trim: true,
+    default: ""
+  },
+
   categories: [{ 
     type: String, 
     trim: true, 
