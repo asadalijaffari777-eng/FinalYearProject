@@ -93,7 +93,11 @@ exports.login = async (req, res)=>{
     if(!isMatch)  return res.json({success: false, message: 'Invalid password'});
 
     const token = generateToken(user);
-    await User.updateOne({ _id: user._id }, { token });
+    try {
+      await User.updateOne({ _id: user._id }, { token });
+    } catch (e) {
+      console.log('Token save error (non-fatal):', e.message);
+    }
 
     const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
     res.cookie('token', token, {
@@ -114,7 +118,7 @@ exports.login = async (req, res)=>{
     });
   }catch(err){
     console.log('Login error: ', err);
-    res.status(500).json({success: false, message: 'Server Error'})
+    res.status(500).json({success: false, message: 'Server Error', error: err.message, stack: err.stack?.split('\n').slice(0,3).join(' | ')})
   }
 }
 
