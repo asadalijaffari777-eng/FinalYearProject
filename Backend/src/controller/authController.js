@@ -93,8 +93,7 @@ exports.login = async (req, res)=>{
     if(!isMatch)  return res.json({success: false, message: 'Invalid password'});
 
     const token = generateToken(user);
-    user.token = token;
-    await user.save();
+    await User.updateOne({ _id: user._id }, { token });
 
     const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
     res.cookie('token', token, {
@@ -140,8 +139,7 @@ exports.verify = async(req, res)=>{
       await user.save();
 
       const token = generateToken(user);
-      user.token = token;
-      await user.save()
+      await User.updateOne({ _id: user._id }, { token });
       const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
       res.cookie('token', token, {
         httpOnly: true,
