@@ -2,7 +2,7 @@ const User = require('../models/User');
 const generateToken = require('../utils/jwt');
 const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 exports.register = async (req, res) => {
   const { username, email, password } = req.body;
@@ -96,22 +96,23 @@ exports.login = async (req, res)=>{
     user.token = token;
     await user.save();
 
-      res.cookie('token', token, {
-        httpOnly: true,
-        maxAge: 5 * 60 * 1000, // 5 minutes
-        sameSite: 'lax',       // cross-origin allowed in dev
-        path: '/',             // make cookie available for all routes
-        secure: false           // must be false on localhost/http
-      });
+    const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+    res.cookie('token', token, {
+      httpOnly: true,
+      maxAge: 5 * 60 * 1000,
+      sameSite: isSecure ? 'none' : 'lax',
+      path: '/',
+      secure: isSecure,
+    });
 
-      return res.json({
-        success: true,
-        messageLogin: "User Found",
-        user: {
-          username: user.username,
-          email: user.email,
-          role: user.role },
-      });
+    return res.json({
+      success: true,
+      messageLogin: "User Found",
+      user: {
+        username: user.username,
+        email: user.email,
+        role: user.role },
+    });
   }catch(err){
     console.log('Login error: ', err);
     res.status(500).json({success: false, message: 'Server Error'})
@@ -141,12 +142,13 @@ exports.verify = async(req, res)=>{
       const token = generateToken(user);
       user.token = token;
       await user.save()
+      const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
       res.cookie('token', token, {
         httpOnly: true,
-        maxAge: 5 * 60 * 1000, // 5 minutes
-        sameSite: 'lax',       // cross-origin allowed in dev
-        path: '/',             // make cookie available for all routes
-        secure: false           // must be false on localhost/http
+        maxAge: 5 * 60 * 1000,
+        sameSite: isSecure ? 'none' : 'lax',
+        path: '/',
+        secure: isSecure,
       });
 
       res.json({
@@ -163,7 +165,13 @@ exports.verify = async(req, res)=>{
 // authController.js
 exports.logout = async (req, res) => {
   try {
-    res.clearCookie('token'); // this is to clear token. Logout means to remove the token from access not deleting the user
+    const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
+    res.clearCookie('token', {
+      httpOnly: true,
+      sameSite: isSecure ? 'none' : 'lax',
+      path: '/',
+      secure: isSecure,
+    });
     return res.status(200).json({ message: 'Logged out successfully' });
   } catch (err) {
     console.error('Logout error:', err);
