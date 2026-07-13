@@ -394,3 +394,138 @@
 .admin-page .cancelBtn:hover {
   background-color: rgb(218, 218, 218);
 }
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .admin-page .admin-header {
+    padding: 12px 16px;
+  }
+
+  .admin-page .logo {
+    font-size: 20px;
+  }
+
+  .admin-page .menu-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  .admin-page .user-badge {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .admin-page .logout-btn {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .admin-page .admin-layout {
+    padding: 16px;
+  }
+
+  .admin-page .admin-title h1 {
+    font-size: 28px;
+  }
+
+  .admin-page .admin-title p {
+    font-size: 14px;
+  }
+
+  .admin-page .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+
+  .admin-page .stat-card {
+    padding: 20px;
+  }
+
+  .admin-page .stat-value {
+    font-size: 30px;
+  }
+
+  .admin-page .stat-label {
+    font-size: 13px;
+  }
+
+  .admin-page .action-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-page .action-card {
+    padding: 18px;
+  }
+
+  .admin-page .action-card h4 {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-page .admin-header {
+    padding: 10px 12px;
+  }
+
+  .admin-page .logo {
+    font-size: 17px;
+  }
+
+  .admin-page .menu-btn {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .admin-page .header-actions {
+    gap: 8px;
+  }
+
+  .admin-page .user-badge {
+    display: none;
+  }
+
+  .admin-page .logout-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .admin-page .admin-layout {
+    padding: 12px;
+  }
+
+  .admin-page .admin-title h1 {
+    font-size: 22px;
+  }
+
+  .admin-page .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .admin-page .stat-card {
+    padding: 16px;
+  }
+
+  .admin-page .stat-value {
+    font-size: 26px;
+  }
+
+  .admin-page .sidebar {
+    width: 240px;
+    padding: 20px;
+  }
+
+  .admin-page .sidebar a {
+    padding: 12px 14px;
+  }
+
+  .admin-page .modal {
+    width: calc(100% - 32px);
+    padding: 24px 20px;
+  }
+}

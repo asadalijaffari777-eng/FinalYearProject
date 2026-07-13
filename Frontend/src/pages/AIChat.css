@@ -698,3 +698,209 @@
   background: rgba(255,255,255,0.08);
   color: rgba(255,255,255,0.7);
 }
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .ai-page .ai-header {
+    padding: 14px 16px;
+  }
+
+  .ai-page .logo {
+    font-size: 20px;
+  }
+
+  .ai-page .menu-btn {
+    padding: 8px 12px;
+  }
+
+  .ai-page .ai-badge {
+    display: none;
+  }
+
+  .ai-page .ai-header-actions {
+    gap: 6px;
+  }
+
+  .ai-page .ai-history-btn,
+  .ai-page .ai-newchat-btn {
+    padding: 8px;
+  }
+
+  .ai-page .ai-container {
+    padding: 12px;
+  }
+
+  .ai-page .chat-box {
+    height: calc(100vh - 100px);
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .ai-page .chat-header h2 {
+    font-size: 18px;
+  }
+
+  .ai-page .chat-messages {
+    padding: 6px;
+    gap: 10px;
+  }
+
+  .ai-page .chat-message {
+    max-width: 88%;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .ai-page .chat-input-area {
+    gap: 8px;
+  }
+
+  .ai-page .chat-input-area textarea {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .ai-page .chat-input-area button {
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .ai-page .ai-history-panel {
+    width: 100%;
+  }
+
+  .ai-page .mfr-card-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .ai-page .mfr-card-name {
+    font-size: 13px;
+  }
+
+  .ai-page .mfr-card-detail {
+    font-size: 11px;
+  }
+
+  .ai-page .mfr-link {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .ai-page .chat-welcome {
+    padding: 40px 16px;
+  }
+
+  .ai-page .chat-welcome h3 {
+    font-size: 17px;
+  }
+
+  .ai-page .chat-welcome p {
+    font-size: 13px;
+  }
+
+  .ai-page .chat-header p {
+    font-size: 13px;
+  }
+
+  .ai-page .new-chat-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-page .ai-header {
+    padding: 10px 12px;
+  }
+
+  .ai-page .logo {
+    font-size: 17px;
+  }
+
+  .ai-page .menu-btn {
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+
+  .ai-page .ai-history-btn,
+  .ai-page .ai-newchat-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .ai-page .ai-container {
+    padding: 8px;
+  }
+
+  .ai-page .chat-box {
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .ai-page .chat-header h2 {
+    font-size: 16px;
+  }
+
+  .ai-page .chat-message {
+    max-width: 92%;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .ai-page .chat-input-area {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ai-page .chat-input-area textarea {
+    min-height: 40px;
+    max-height: 80px;
+    padding: 10px;
+  }
+
+  .ai-page .chat-input-area button {
+    padding: 10px;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .ai-page .mfr-card {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ai-page .mfr-card-img {
+    width: 100%;
+    height: 140px;
+  }
+
+  .ai-page .mfr-card-links {
+    gap: 4px;
+  }
+
+  .ai-page .mfr-link {
+    font-size: 10px;
+    padding: 3px 7px;
+  }
+
+  .ai-page .chat-welcome {
+    padding: 28px 12px;
+  }
+
+  .ai-page .chat-welcome h3 {
+    font-size: 15px;
+  }
+
+  .ai-page .sidebar {
+    width: 240px;
+    padding: 20px;
+  }
+
+  .ai-page .sidebar a {
+    padding: 12px 14px;
+  }
+}
