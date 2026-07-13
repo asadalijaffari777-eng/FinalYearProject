@@ -1,13 +1,29 @@
 const mongoose = require('mongoose')
 
-const connectDB = async ()=>{
-    try{
-        await mongoose.connect(process.env.DATABASE_URL)
-        console.log('MongoDB is connected')
-    }catch(err){
-        console.log('MongoDB failed: ', err)
-        process.exit(1)
-    }
+let cached = global.mongoose
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null }
+}
+
+const connectDB = async () => {
+  if (cached.conn) return cached.conn
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(process.env.DATABASE_URL).then(() => {
+      console.log('MongoDB is connected')
+      return mongoose
+    })
+  }
+
+  try {
+    cached.conn = await cached.promise
+  } catch (err) {
+    cached.promise = null
+    console.log('MongoDB failed: ', err)
+    throw err
+  }
+
+  return cached.conn
 }
 
 module.exports = connectDB

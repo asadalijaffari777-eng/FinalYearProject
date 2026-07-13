@@ -3,7 +3,9 @@ try { require('dotenv').config({ path: path.join(__dirname, '../.env') }); } cat
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 const mongoose = require('mongoose');
+const connectDB = require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const passport = require("passport");
 const manufacturerRoutes = require('./routes/manufacturerRoutes');
@@ -15,6 +17,7 @@ require('./config/passport');
 
 const app = express();
 
+app.use(compression());
 app.use(cors({
   origin: process.env.CORS_ORIGIN || ['http://localhost:5173', 'http://localhost:4173'],
   credentials: true,
@@ -27,7 +30,7 @@ app.use(passport.initialize());
 app.use(async (req, res, next) => {
   if (mongoose.connection.readyState !== 1) {
     try {
-      await mongoose.connect(process.env.DATABASE_URL);
+      await connectDB();
     } catch (err) {
       return res.status(503).json({ message: 'Database connection failed', error: err.message });
     }
