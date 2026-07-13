@@ -17,15 +17,23 @@ router.post('/verify', authController.verify);
 // router.get('/dashboard', verifyToken, authController.dashboard);
 router.get('/dashboard', verifyToken, authController.dashboard);
 
-router.get(
-    '/google',
-    passport.authenticate('google', {scope: ['profile', 'email'], prompt: 'select_account'})
-)
+router.get('/google', (req, res, next) => {
+  const hasGoogleConfig = process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET;
+  if (!hasGoogleConfig) {
+    return res.status(500).json({ message: 'Google OAuth not configured: GOOGLE_CLIENT_ID or GOOGLE_CLIENT_SECRET missing on server' });
+  }
+  passport.authenticate('google', { scope: ['profile', 'email'], prompt: 'select_account' })(req, res, next);
+})
 
 router.get(
     '/google/callback',
-    passport.authenticate('google', {session: false, failureRedirect: '/'}),
-    (req, res)=>{
+    (req, res, next) => {
+      if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+        return res.status(500).json({ message: 'Google OAuth not configured on server' });
+      }
+      passport.authenticate('google', { session: false, failureRedirect: '/' })(req, res, next);
+    },
+    (req, res) => {
         const token = generateToken(req.user);
         res.cookie('token', token,
             {
