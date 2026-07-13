@@ -37,6 +37,7 @@ function AdminDashboard() {
     } catch {
       alert("Logout failed");
     } finally {
+      localStorage.removeItem("token");
       setShowLogoutModal(false);
     }
   };

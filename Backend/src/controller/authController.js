@@ -111,6 +111,7 @@ exports.login = async (req, res)=>{
     return res.json({
       success: true,
       messageLogin: "User Found",
+      token,
       user: {
         username: user.username,
         email: user.email,
@@ -155,7 +156,8 @@ exports.verify = async(req, res)=>{
 
       res.json({
         success: true,
-        message: 'Email Verified'
+        message: 'Email Verified',
+        token
       })
 
   }catch(err){

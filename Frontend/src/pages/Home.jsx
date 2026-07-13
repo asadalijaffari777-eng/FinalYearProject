@@ -30,6 +30,7 @@ function Home() {
       alert("Logout failed");
     } finally {
       localStorage.removeItem("businessSelections");
+      localStorage.removeItem("token");
       setShowLogoutModal(false);
     }
   };

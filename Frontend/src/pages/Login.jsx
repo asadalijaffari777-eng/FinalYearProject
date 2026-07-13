@@ -33,6 +33,7 @@ function Login() {
 
       if (res.data.success) {
         localStorage.removeItem("businessSelections");
+        if (res.data.token) localStorage.setItem("token", res.data.token);
         if (res.data.user?.role === "admin") {
           navigate("/admin");
         } else {

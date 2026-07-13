@@ -30,6 +30,7 @@ function Verify() {
       const res = await API.post("/verify", { email, otp });
 
       if (res.data.success) {
+        if (res.data.token) localStorage.setItem("token", res.data.token);
         setTimeout(() => navigate("/dashboard"), 100);
       } else {
         setMessage(res.data.message);
