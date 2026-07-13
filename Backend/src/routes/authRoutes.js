@@ -33,7 +33,10 @@ router.get(
                 maxAge: 5 * 60 * 1000
             }
         );
-        res.redirect('http://localhost:5173/dashboard')
+        const frontendUrl = process.env.CORS_ORIGIN 
+          ? (Array.isArray(process.env.CORS_ORIGIN) ? process.env.CORS_ORIGIN[0] : process.env.CORS_ORIGIN.split(',')[0])
+          : `${req.protocol}://${req.get('host')}`
+        res.redirect(`${frontendUrl}/dashboard`)
     }
 );
 
