@@ -148,7 +148,7 @@ function Login() {
               className="google-btn"
               onClick={() => {
                 window.location.href =
-                  "http://localhost:3001/fyp/google";
+                  "/fyp/google";
               }}
             >
               Continue with Google
