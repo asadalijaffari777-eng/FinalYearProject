@@ -54,11 +54,7 @@ function About() {
         className={`sidebar ${menuOpen ? "open" : ""}`}
         initial={false}
         animate={{ x: menuOpen ? 0 : -300 }}
-        transition={{
-          type: "spring",
-          stiffness: 120,
-          damping: 20
-        }}
+        transition={{ type: "spring", stiffness: 120 }}
       >
         <div className="sidebar-top">
           <h2>Menu</h2>
