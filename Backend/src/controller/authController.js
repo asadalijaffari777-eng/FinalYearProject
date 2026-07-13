@@ -36,9 +36,8 @@ exports.register = async (req, res) => {
     });
 
     await newUser.save()
-    
 
-    sendEmail(
+    await sendEmail(
         email,
         "Your OTP Code",
         `
@@ -47,7 +46,7 @@ exports.register = async (req, res) => {
         <p>This code will expire in 2 minutes.</p>
         <p>If this was not you, we recommend changing your password immediately.</p>
         `
-    )
+    ).catch(err => console.log('Email send error:', err.message))
 
     return res.json({
       success: true,
