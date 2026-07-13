@@ -37,16 +37,25 @@ exports.register = async (req, res) => {
 
     await newUser.save()
 
-    await sendEmail(
-        email,
-        "Your OTP Code",
-        `
-        <p>You requested to log in to your account.</p>
-        <p>Your one-time verification code is:<br><b>${otp}</b></p>
-        <p>This code will expire in 2 minutes.</p>
-        <p>If this was not you, we recommend changing your password immediately.</p>
-        `
-    ).catch(err => console.log('Email send error:', err.message))
+    try {
+      await sendEmail(
+          email,
+          "Your OTP Code",
+          `
+          <p>You requested to log in to your account.</p>
+          <p>Your one-time verification code is:<br><b>${otp}</b></p>
+          <p>This code will expire in 2 minutes.</p>
+          <p>If this was not you, we recommend changing your password immediately.</p>
+          `
+      )
+    } catch (emailErr) {
+      console.log('Email send error:', emailErr.message)
+      return res.json({
+        success: false,
+        message: 'Failed to send OTP email. Verify EMAIL_USER/EMAIL_PASS in Vercel env vars.',
+        error: emailErr.message
+      })
+    }
 
     return res.json({
       success: true,
