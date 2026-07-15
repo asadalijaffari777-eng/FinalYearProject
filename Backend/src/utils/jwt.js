@@ -10,7 +10,7 @@ const generateToken = (user) =>{
         },
         SECRET_KEY,
         {
-            expiresIn: '5m'
+            expiresIn: '7d'
         }
     )
 }

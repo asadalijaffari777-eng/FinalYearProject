@@ -110,7 +110,7 @@ exports.login = async (req, res)=>{
     const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
     res.cookie('token', token, {
       httpOnly: true,
-      maxAge: 5 * 60 * 1000,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
       sameSite: isSecure ? 'none' : 'lax',
       path: '/',
       secure: isSecure,
@@ -156,7 +156,7 @@ exports.verify = async(req, res)=>{
       const isSecure = req.secure || req.headers['x-forwarded-proto'] === 'https';
       res.cookie('token', token, {
         httpOnly: true,
-        maxAge: 5 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
         sameSite: isSecure ? 'none' : 'lax',
         path: '/',
         secure: isSecure,
