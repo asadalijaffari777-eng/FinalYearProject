@@ -6,9 +6,12 @@ import "./Login.css";
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const [message, setMessage] = useState("");
   const msgRef = useRef(null);
   const navigate = useNavigate();
+
+  const showError = (text) => {
+    if (msgRef.current) msgRef.current.textContent = text;
+  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,10 +19,10 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
+    showError("");
 
     if (!form.email || !form.password) {
-      setMessage("All fields are required");
+      showError("All fields are required");
       return;
     }
 
@@ -31,10 +34,10 @@ function Login() {
         if (res.data.token) localStorage.setItem("token", res.data.token);
         navigate(res.data.user?.role === "admin" ? "/admin" : "/dashboard");
       } else {
-        setMessage(res.data.message || "Login failed");
+        showError(res.data.message || "Login failed");
       }
     } catch (err) {
-      setMessage("Login failed");
+      showError("Login failed");
     }
   };
 
@@ -85,7 +88,7 @@ function Login() {
               Forgot Password?
             </div>
 
-            <p ref={msgRef} className="error-msg">{message || "\u00A0"}</p>
+            <p ref={msgRef} className="error-msg"></p>
           </form>
 
           <div className="bottom-text">
