@@ -23,16 +23,16 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Form submitted!");
+
+    setMessage("");
 
     if (!form.email || !form.password) {
-      return setMessage("All fields are required");
+      setMessage("All fields are required");
+      return;
     }
 
     try {
-      console.log("Submitting login form:", form.email);
       const res = await API.post("/login", form);
-      console.log("Login response:", res.data);
 
       if (res.data.success) {
         localStorage.removeItem("businessSelections");
@@ -43,14 +43,10 @@ function Login() {
           navigate("/dashboard");
         }
       } else {
-        setMessage(res.data.message || "Login failed (no message)");
+        setMessage(res.data.message || "Login failed");
       }
     } catch (err) {
-      setMessage(
-        err.response?.data?.message ||
-        err.message ||
-        "Login failed"
-      );
+      setMessage("Login failed");
     }
   };
 
@@ -162,9 +158,7 @@ function Login() {
               Forgot Password?
             </div>
 
-            {message && (
-              <p className="error-msg">{message}</p>
-            )}
+            {message && <p className="error-msg">{message}</p>}
           </form>
 
           <div className="bottom-text">
