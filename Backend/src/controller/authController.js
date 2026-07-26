@@ -222,7 +222,7 @@ exports.forgetPassword = async (req, res)=>{
     .digest('hex')
 
     existUser.resetOtp = hashedOtp;
-    existUser.resetOtpExpire = Date.now() + 5 * 60 * 1000;
+    existUser.resetOtpExpire = new Date(Date.now() + 5 * 60 * 1000);
     existUser.resetOtpAttempts = 0;
 
     await existUser.save();
@@ -260,7 +260,7 @@ exports.resetPassword = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.json({ success: false, message: 'User not found' });
 
-    if (!user.resetOtpExpire || user.resetOtpExpire < Date.now()) {
+    if (!user.resetOtpExpire || user.resetOtpExpire < new Date()) {
       return res.json({ success: false, message: 'OTP has expired. Please request a new one.' });
     }
 
