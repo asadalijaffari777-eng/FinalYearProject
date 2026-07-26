@@ -221,11 +221,13 @@ exports.forgetPassword = async (req, res)=>{
     .update(otp)
     .digest('hex')
 
+    const expireTime = Date.now() + 5 * 60 * 1000;
     existUser.resetOtp = hashedOtp;
-    existUser.resetOtpExpire = new Date(Date.now() + 5 * 60 * 1000);
+    existUser.resetOtpExpire = expireTime;
     existUser.resetOtpAttempts = 0;
 
     await existUser.save();
+    console.log('ForgetPassword saved:', { email, expireTime, stored: existUser.resetOtpExpire });
 
     await sendEmail(
       existUser.email,
@@ -260,7 +262,7 @@ exports.resetPassword = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.json({ success: false, message: 'User not found' });
 
-    if (!user.resetOtpExpire || user.resetOtpExpire < new Date()) {
+    if (!user.resetOtpExpire || user.resetOtpExpire < Date.now()) {
       return res.json({ success: false, message: 'OTP has expired. Please request a new one.' });
     }
 

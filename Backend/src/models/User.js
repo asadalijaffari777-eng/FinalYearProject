@@ -34,6 +34,15 @@ const UserSchema = new mongoose.Schema({
     },
     otp: String,
     otpExpires: Date,
+
+    resetOtp: String,
+    resetOtpExpire: Number,
+    resetOtpAttempts:{
+        type: Number,
+        default: 0
+    },
+    resetSessionToken: String
+
 });
 
 UserSchema.pre('save', async function(next){
