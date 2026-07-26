@@ -23,6 +23,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    alert("Form submitted!");
 
     if (!form.email || !form.password) {
       return setMessage("All fields are required");
@@ -42,11 +43,12 @@ function Login() {
           navigate("/dashboard");
         }
       } else {
-        setMessage(res.data.message);
+        setMessage(res.data.message || "Login failed (no message)");
       }
     } catch (err) {
       setMessage(
         err.response?.data?.message ||
+        err.message ||
         "Login failed"
       );
     }
