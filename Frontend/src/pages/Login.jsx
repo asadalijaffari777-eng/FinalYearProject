@@ -1,17 +1,14 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../Services/api";
 import { motion } from "framer-motion";
+import ErrorToast from "../component/ErrorToast";
 import "./Login.css";
 
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
-  const msgRef = useRef(null);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  const showError = (text) => {
-    if (msgRef.current) msgRef.current.textContent = text;
-  };
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -19,10 +16,10 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    showError("");
+    setError("");
 
     if (!form.email || !form.password) {
-      showError("All fields are required");
+      setError("All fields are required");
       return;
     }
 
@@ -34,15 +31,16 @@ function Login() {
         if (res.data.token) localStorage.setItem("token", res.data.token);
         navigate(res.data.user?.role === "admin" ? "/admin" : "/dashboard");
       } else {
-        showError(res.data.message || "Login failed");
+        setError(res.data.message || "Login failed");
       }
     } catch (err) {
-      showError("Login failed");
+      setError("Login failed");
     }
   };
 
   return (
     <div className="login-page">
+      <ErrorToast message={error} onClose={() => setError("")} />
 
       <div className="mesh-bg"></div>
       <div className="noise"></div>
@@ -87,8 +85,6 @@ function Login() {
             <div className="forget-link" onClick={() => navigate('/forget-password')}>
               Forgot Password?
             </div>
-
-            <p ref={msgRef} className="error-msg"></p>
           </form>
 
           <div className="bottom-text">
@@ -97,7 +93,6 @@ function Login() {
           </div>
         </div>
       </motion.div>
-
     </div>
   );
 }

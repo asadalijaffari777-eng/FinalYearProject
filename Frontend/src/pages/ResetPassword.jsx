@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../Services/api";
+import ErrorToast from "../component/ErrorToast";
 import "./ResetPassword.css";
 
 function ResetPassword() {
@@ -12,7 +13,7 @@ function ResetPassword() {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   if (!email) {
@@ -33,31 +34,31 @@ function ResetPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!otp || !newPassword || !confirmPassword) {
-      return setMessage("All fields are required");
+      return setError("All fields are required");
     }
 
     if (newPassword.length < 6) {
-      return setMessage("Password must be at least 6 characters");
+      return setError("Password must be at least 6 characters");
     }
 
     if (newPassword !== confirmPassword) {
-      return setMessage("Passwords do not match");
+      return setError("Passwords do not match");
     }
 
     setLoading(true);
-    setMessage("");
 
     try {
       const res = await API.post("/reset-password", { email, otp, newPassword });
       if (res.data.success) {
         navigate("/", { state: { resetSuccess: true } });
       } else {
-        setMessage(res.data.message);
+        setError(res.data.message);
       }
     } catch {
-      setMessage("Something went wrong");
+      setError("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -65,6 +66,8 @@ function ResetPassword() {
 
   return (
     <div className="reset-page">
+      <ErrorToast message={error} onClose={() => setError("")} />
+
       <div className="mesh-bg"></div>
       <div className="noise"></div>
 
@@ -124,8 +127,6 @@ function ResetPassword() {
               {loading ? "Resetting..." : "Reset Password"}
             </button>
           </form>
-
-          {message && <p className="error-msg">{message}</p>}
 
           <div className="bottom-text">
             Remember your password?

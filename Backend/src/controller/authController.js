@@ -73,32 +73,32 @@ exports.login = async (req, res)=>{
 
   try{
     const user = await User.findOne({email});
-    if(!user) return res.json({success: false, message: 'Invalid user'});
+    if(!user) return res.json({success: false, message: 'Invalid email/password'});
 
     if(user.authProvider === 'google'){
       return res.json({
-        sucess: false,
-        message: 'The Account uses Google Login. Please sign in with Google'
+        success: false,
+        message: 'Invalid email/password'
       })
     }
 
     if(!user.isVerified){
       return res.json({
         success: false,
-        message: 'Please verify user'
+        message: 'Invalid email/password'
       })
     }
 
     if(!user.password){
       return res.json({
         success: false,
-        message: 'Password is neccessary!'
+        message: 'Invalid email/password'
       })
     };
 
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch)  return res.json({success: false, message: 'Invalid password'});
+    if(!isMatch)  return res.json({success: false, message: 'Invalid email/password'});
 
     const token = generateToken(user);
     try {

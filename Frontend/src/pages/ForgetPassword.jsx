@@ -2,30 +2,31 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import API from "../Services/api";
+import ErrorToast from "../component/ErrorToast";
 import "./ForgetPassword.css";
 
 function ForgetPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return setMessage("Please enter your email");
+    setError("");
+    if (!email) return setError("Please enter your email");
 
     setLoading(true);
-    setMessage("");
 
     try {
       const res = await API.post("/forget-password", { email });
       if (res.data.success) {
         navigate("/reset-password", { state: { email } });
       } else {
-        setMessage(res.data.message);
+        setError(res.data.message);
       }
     } catch {
-      setMessage("Something went wrong");
+      setError("Something went wrong");
     } finally {
       setLoading(false);
     }
@@ -33,6 +34,8 @@ function ForgetPassword() {
 
   return (
     <div className="forget-page">
+      <ErrorToast message={error} onClose={() => setError("")} />
+
       <div className="mesh-bg"></div>
       <div className="noise"></div>
 
@@ -71,8 +74,6 @@ function ForgetPassword() {
               {loading ? "Sending..." : "Send OTP"}
             </button>
           </form>
-
-          {message && <p className="error-msg">{message}</p>}
 
           <div className="bottom-text">
             Remember your password?
