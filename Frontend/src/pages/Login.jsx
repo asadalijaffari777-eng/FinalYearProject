@@ -29,7 +29,9 @@ function Login() {
     }
 
     try {
+      console.log("Submitting login form:", form.email);
       const res = await API.post("/login", form);
+      console.log("Login response:", res.data);
 
       if (res.data.success) {
         localStorage.removeItem("businessSelections");
@@ -158,13 +160,10 @@ function Login() {
               Forgot Password?
             </div>
 
+            {message && (
+              <p className="error-msg">{message}</p>
+            )}
           </form>
-
-          {message && (
-            <p className="error-msg">
-              {message}
-            </p>
-          )}
 
           <div className="bottom-text">
 
