@@ -154,6 +154,10 @@ function Login() {
               Continue with Google
             </button>
 
+            <div className="forget-link" onClick={() => navigate('/forget-password')}>
+              Forgot Password?
+            </div>
+
           </form>
 
           {message && (

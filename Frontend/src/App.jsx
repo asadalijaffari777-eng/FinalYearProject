@@ -14,6 +14,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminUsers from "./pages/AdminUsers";
 import AdminManufacturers from "./pages/AdminManufacturers";
 import AdminItems from "./pages/AdminItems";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -22,6 +24,9 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/verify" element={<Verify />} />
 
+      <Route path='/forget-password' element={<ForgetPassword />} />
+      <Route path='/reset-password' element={<ResetPassword />} />
+
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Home />} />
         <Route path="/start-business" element={<StartBusiness />} />
@@ -29,6 +34,7 @@ function App() {
         <Route path="/manufacturers" element={<Manufacturers />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/about" element={<About />} />
+        
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<AdminUsers />} />

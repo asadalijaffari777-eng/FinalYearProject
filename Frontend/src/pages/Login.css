@@ -364,6 +364,19 @@
   text-decoration: underline;
 }
 
+.login-page .forget-link {
+  text-align: center;
+  margin-top: 18px;
+  color: rgba(255,255,255,.5);
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.login-page .forget-link:hover {
+  color: #93c5fd;
+}
+
 /* =========================
    RESPONSIVE
 ========================= */

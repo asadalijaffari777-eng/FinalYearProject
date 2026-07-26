@@ -202,3 +202,84 @@ exports.dashboard = async (req, res) => {
 }
 };
 
+
+
+exports.forgetPassword = async (req, res)=>{
+  const {email} = req.body;
+
+  if (!email) return res.json({ success: false, message: 'Email is required' });
+
+  try{
+    const existUser = await User.findOne({email});
+
+    if(!existUser) return res.json({success: true, message: 'OTP has been sent to the email'});
+
+    const otp = crypto.randomInt(100000, 1000000).toString();
+
+    const hashedOtp = crypto
+    .createHash('sha256')
+    .update(otp)
+    .digest('hex')
+
+    existUser.resetOtp = hashedOtp;
+    existUser.resetOtpExpire = Date.now() + 5 * 60 * 1000;
+    existUser.resetOtpAttempts = 0;
+
+    await existUser.save();
+
+    await sendEmail(
+      existUser.email,
+      "Password Reset OTP",
+        `
+        <p>You requested to reset your account password.</p>
+        <p>Your one-time password (OTP) is:<br>
+        <b>${otp}</b></p>
+        <p>This code will expire in 5 minutes.</p>
+        <p>If you did not request a password reset, please ignore this email.</p>
+        `
+    )
+
+    res.json({
+      success: true,
+      message: 'OTP has been sent to the email'
+    })
+    
+  }catch(err){
+    res.status(500).json({success: false, message: 'Server Error'});
+  }
+}
+
+exports.resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  if (!email || !otp || !newPassword) {
+    return res.json({ success: false, message: 'Email, OTP, and new password are required' });
+  }
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.json({ success: false, message: 'User not found' });
+
+    if (!user.resetOtpExpire || user.resetOtpExpire < Date.now()) {
+      return res.json({ success: false, message: 'OTP has expired. Please request a new one.' });
+    }
+
+    const hashedInput = crypto.createHash('sha256').update(otp).digest('hex');
+    if (user.resetOtp !== hashedInput) {
+      user.resetOtpAttempts = (user.resetOtpAttempts || 0) + 1;
+      await user.save();
+      return res.json({ success: false, message: 'Invalid OTP' });
+    }
+
+    user.password = newPassword;
+    user.resetOtp = null;
+    user.resetOtpExpire = null;
+    user.resetOtpAttempts = 0;
+    await user.save();
+
+    res.json({ success: true, message: 'Password has been reset successfully' });
+
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+}
