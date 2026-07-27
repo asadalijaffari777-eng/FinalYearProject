@@ -46,10 +46,11 @@
 
 .ai-widget-popup {
   position: fixed;
-  bottom: 92px;
-  right: 28px;
-  width: 420px;
-  height: 600px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  height: 640px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
@@ -63,6 +64,12 @@
 
 .ai-widget-popup.minimized {
   height: auto;
+  width: 360px;
+  top: auto;
+  bottom: 92px;
+  left: auto;
+  right: 28px;
+  transform: none;
 }
 
 .ai-widget-header {
@@ -291,10 +298,11 @@
 
 @media (min-width: 1200px) {
   .ai-widget-popup {
-    width: 480px;
-    height: 680px;
-    bottom: 100px;
-    right: 32px;
+    width: 560px;
+    height: 700px;
+  }
+  .ai-widget-popup.minimized {
+    width: 400px;
   }
   .ai-widget-messages {
     padding: 20px;
@@ -324,12 +332,23 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .ai-widget-popup {
-    right: 12px;
-    bottom: 84px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: calc(100% - 24px);
-    height: 70vh;
+    height: 80vh;
+    border-radius: 16px;
+  }
+  .ai-widget-popup.minimized {
+    width: calc(100% - 24px);
+    top: auto;
+    bottom: 84px;
+    left: auto;
+    right: 12px;
+    transform: none;
+    height: auto;
   }
 
   .ai-widget-btn {
