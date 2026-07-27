@@ -9,12 +9,16 @@ function ForgetPassword() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
+  const [key, setKey] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setError("");
-    if (!email) return setError("Please enter your email");
+    if (!email) {
+      setError("Please enter your email");
+      setKey(k => k + 1);
+      return;
+    }
 
     setLoading(true);
 
@@ -24,9 +28,11 @@ function ForgetPassword() {
         navigate("/reset-password", { state: { email } });
       } else {
         setError(res.data.message);
+        setKey(k => k + 1);
       }
     } catch {
       setError("Something went wrong");
+      setKey(k => k + 1);
     } finally {
       setLoading(false);
     }
@@ -34,7 +40,7 @@ function ForgetPassword() {
 
   return (
     <div className="forget-page">
-      <ErrorToast message={error} onClose={() => setError("")} />
+      <ErrorToast key={key} message={error} onClose={() => setError("")} />
 
       <div className="mesh-bg"></div>
       <div className="noise"></div>
@@ -59,7 +65,7 @@ function ForgetPassword() {
             <p>We'll send a verification code to your email.</p>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="input-box">
               <label>Email</label>
               <input
@@ -70,7 +76,7 @@ function ForgetPassword() {
               />
             </div>
 
-            <button type="submit" className="forget-btn" disabled={loading}>
+            <button type="button" className="forget-btn" disabled={loading} onClick={handleSubmit}>
               {loading ? "Sending..." : "Send OTP"}
             </button>
           </form>

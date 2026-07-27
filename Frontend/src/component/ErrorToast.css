@@ -1,6 +1,6 @@
 .error-toast {
   position: fixed;
-  top: 24px;
+  top: -100px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 99999;
@@ -19,6 +19,16 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   max-width: min(500px, calc(100% - 32px));
   pointer-events: auto;
+
+  transition: top 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.error-toast.show {
+  top: 24px;
+}
+
+.error-toast.hide {
+  top: -100px;
 }
 
 .error-toast-icon {
@@ -65,8 +75,10 @@
 }
 
 @media (max-width: 480px) {
-  .error-toast {
+  .error-toast.show {
     top: 16px;
+  }
+  .error-toast {
     padding: 12px 16px;
     max-width: calc(100% - 24px);
   }

@@ -14,6 +14,7 @@ function ResetPassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [key, setKey] = useState(0);
   const [loading, setLoading] = useState(false);
 
   if (!email) {
@@ -32,20 +33,25 @@ function ResetPassword() {
     );
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setError("");
 
     if (!otp || !newPassword || !confirmPassword) {
-      return setError("All fields are required");
+      setError("All fields are required");
+      setKey(k => k + 1);
+      return;
     }
 
     if (newPassword.length < 6) {
-      return setError("Password must be at least 6 characters");
+      setError("Password must be at least 6 characters");
+      setKey(k => k + 1);
+      return;
     }
 
     if (newPassword !== confirmPassword) {
-      return setError("Passwords do not match");
+      setError("Passwords do not match");
+      setKey(k => k + 1);
+      return;
     }
 
     setLoading(true);
@@ -56,9 +62,11 @@ function ResetPassword() {
         navigate("/", { state: { resetSuccess: true } });
       } else {
         setError(res.data.message);
+        setKey(k => k + 1);
       }
     } catch {
       setError("Something went wrong");
+      setKey(k => k + 1);
     } finally {
       setLoading(false);
     }
@@ -66,7 +74,7 @@ function ResetPassword() {
 
   return (
     <div className="reset-page">
-      <ErrorToast message={error} onClose={() => setError("")} />
+      <ErrorToast key={key} message={error} onClose={() => setError("")} />
 
       <div className="mesh-bg"></div>
       <div className="noise"></div>
@@ -91,7 +99,7 @@ function ResetPassword() {
             <p>OTP sent to <strong>{email}</strong></p>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="input-box">
               <label>OTP Code</label>
               <input
@@ -123,7 +131,7 @@ function ResetPassword() {
               />
             </div>
 
-            <button type="submit" className="reset-btn" disabled={loading}>
+            <button type="button" className="reset-btn" disabled={loading} onClick={handleSubmit}>
               {loading ? "Resetting..." : "Reset Password"}
             </button>
           </form>

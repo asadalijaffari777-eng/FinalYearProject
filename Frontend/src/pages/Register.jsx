@@ -15,6 +15,7 @@ function Register() {
   });
 
   const [error, setError] = useState("");
+  const [key, setKey] = useState(0);
 
   const handleChange = (e) => {
     setForm({
@@ -23,13 +24,13 @@ function Register() {
     });
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-
+  const handleRegister = async () => {
     setError("");
 
     if (!form.username || !form.email || !form.password) {
-      return setError("All fields are required");
+      setError("All fields are required");
+      setKey(k => k + 1);
+      return;
     }
 
     try {
@@ -41,18 +42,20 @@ function Register() {
         });
       } else {
         setError(res.data.message);
+        setKey(k => k + 1);
       }
     } catch (err) {
       setError(
         err.response?.data?.message ||
         "Registration failed"
       );
+      setKey(k => k + 1);
     }
   };
 
   return (
     <div className="register-page">
-      <ErrorToast message={error} onClose={() => setError("")} />
+      <ErrorToast key={key} message={error} onClose={() => setError("")} />
 
       <div className="mesh-bg"></div>
       <div className="noise"></div>
@@ -77,7 +80,7 @@ function Register() {
             <p>Start building your startup professionally.</p>
           </div>
 
-          <form onSubmit={handleRegister}>
+          <form>
             <div className="input-box">
               <label>Name</label>
               <input type="text" name="username" value={form.username} onChange={handleChange} />
@@ -90,7 +93,7 @@ function Register() {
               <label>Password</label>
               <input type="password" name="password" value={form.password} onChange={handleChange} />
             </div>
-            <button type="submit" className="register-btn">Create Account</button>
+            <button type="button" className="register-btn" onClick={handleRegister}>Create Account</button>
           </form>
 
           <div className="bottom-text">

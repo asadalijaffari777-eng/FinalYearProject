@@ -8,18 +8,19 @@ import "./Login.css";
 function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+  const [key, setKey] = useState(0);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     setError("");
 
     if (!form.email || !form.password) {
       setError("All fields are required");
+      setKey(k => k + 1);
       return;
     }
 
@@ -32,15 +33,17 @@ function Login() {
         navigate(res.data.user?.role === "admin" ? "/admin" : "/dashboard");
       } else {
         setError(res.data.message || "Login failed");
+        setKey(k => k + 1);
       }
     } catch (err) {
       setError("Login failed");
+      setKey(k => k + 1);
     }
   };
 
   return (
     <div className="login-page">
-      <ErrorToast message={error} onClose={() => setError("")} />
+      <ErrorToast key={key} message={error} onClose={() => setError("")} />
 
       <div className="mesh-bg"></div>
       <div className="noise"></div>
@@ -65,7 +68,7 @@ function Login() {
             <p>Sign in to access your account.</p>
           </div>
 
-          <form onSubmit={handleSubmit}>
+          <form>
             <div className="input-box">
               <label>Email</label>
               <input type="email" name="email" value={form.email} onChange={handleChange} />
@@ -74,7 +77,7 @@ function Login() {
               <label>Password</label>
               <input type="password" name="password" value={form.password} onChange={handleChange} />
             </div>
-            <button type="submit" className="login-btn">Sign In</button>
+            <button type="button" className="login-btn" onClick={handleSubmit}>Sign In</button>
 
             <div className="divider"><span>OR</span></div>
 
