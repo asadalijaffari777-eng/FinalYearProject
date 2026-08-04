@@ -84,23 +84,15 @@
 
 .login-page .login-wrapper {
   width: min(1300px, 100%);
-
   min-height: 650px;
-  max-height: 90vh;
 
   display: grid;
   grid-template-columns: 1.2fr .8fr;
 
-  overflow: hidden;
-
   border-radius: 36px;
-
   background: rgba(255,255,255,.05);
-
   border: 1px solid rgba(255,255,255,.08);
-
   backdrop-filter: blur(24px);
-
   box-shadow: 0 30px 80px rgba(0,0,0,.45);
 
   position: relative;
@@ -175,7 +167,7 @@
 ========================= */
 
 .login-page .login-panel {
-  padding: 70px 50px;
+  padding: 40px 45px;
 
   display: flex;
   flex-direction: column;
@@ -183,13 +175,13 @@
 }
 
 .login-page .panel-top {
-  margin-bottom: 36px;
+  margin-bottom: 20px;
 }
 
 .login-page .panel-top h2 {
   color: white;
 
-  font-size: 44px;
+  font-size: 38px;
   font-weight: 800;
 
   margin-bottom: 10px;
@@ -259,7 +251,7 @@
 .login-page .login-btn {
   width: 100%;
 
-  padding: 18px;
+  padding: 15px;
 
   border: none;
   border-radius: 18px;
